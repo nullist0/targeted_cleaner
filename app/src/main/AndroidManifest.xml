@@ -13,7 +13,9 @@
         <receiver
             android:name=".component.receiver.AutoKillerReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true">
+
+        </receiver>
 
         <activity android:name=".component.activity.MainActivity">
             <intent-filter>
