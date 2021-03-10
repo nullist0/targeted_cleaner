@@ -2,12 +2,10 @@ package per.nullist.targetedcleaner.repository
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.SystemClock
-import per.nullist.targetedcleaner.component.activity.MainActivity
+import per.nullist.targetedcleaner.component.receiver.AutoKillerReceiver
 import per.nullist.targetedcleaner.entity.SettingRepository
 
 class LocalSettingRepository(private val context: Context) : SettingRepository {
@@ -24,7 +22,7 @@ class LocalSettingRepository(private val context: Context) : SettingRepository {
     private inline fun <reified T> buildIntent(context: Context) : Intent = Intent(context, T::class.java)
 
     private fun buildPendingIntent(): PendingIntent {
-        val intent = buildIntent<MainActivity>(context)
+        val intent = buildIntent<AutoKillerReceiver>(context)
         return PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 

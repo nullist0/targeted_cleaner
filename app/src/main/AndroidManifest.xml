@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TargetedCleaner">
+        <receiver
+            android:name=".component.receiver.AutoKillerReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity android:name=".component.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
