@@ -14,10 +14,11 @@
             android:name=".component.receiver.AutoKillerReceiver"
             android:enabled="true"
             android:exported="true">
-
         </receiver>
 
-        <activity android:name=".component.activity.MainActivity">
+        <activity
+            android:name=".component.activity.MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
