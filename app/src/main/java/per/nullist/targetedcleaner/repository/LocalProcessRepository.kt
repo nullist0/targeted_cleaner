@@ -10,8 +10,8 @@ class LocalProcessRepository(context: Context): ProcessRepository {
 
     private val activityManager = context.getSystemService<ActivityManager>()
 
-    override fun readAllProcessPackages(): List<String> {
-        return activityManager
+    override val allProcessPackages: List<String> get() =
+        activityManager
             ?.runningAppProcesses
             ?.filter {
                 when {
@@ -25,7 +25,6 @@ class LocalProcessRepository(context: Context): ProcessRepository {
             }
             ?.map { it.processName }
             ?: listOf()
-    }
 
     override fun killProcess(packageName: String) {
         activityManager?.killBackgroundProcesses(packageName)

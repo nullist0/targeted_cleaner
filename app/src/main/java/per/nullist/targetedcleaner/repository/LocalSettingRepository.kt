@@ -13,11 +13,7 @@ class LocalSettingRepository(private val context: Context) : SettingRepository {
     private val REQUEST_CODE = 10
 
     private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-    private fun getInterval() : Long =
-        SharedPreferenceHelper
-            .instance(context)
-            .run { getLong("interval", 0L) }
+    private val helper = SharedPreferenceHelper(context)
 
     private inline fun <reified T> buildIntent(context: Context) : Intent = Intent(context, T::class.java)
 
@@ -26,18 +22,33 @@ class LocalSettingRepository(private val context: Context) : SettingRepository {
         return PendingIntent.getBroadcast(context, REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
-    override fun setTimer(milliInterval: Int) {
-        alarmManager.run {
-            val interval = getInterval()
-            val triggerAtMills = SystemClock.elapsedRealtime() + interval
-            setInexactRepeating(
-                AlarmManager.ELAPSED_REALTIME,
-                triggerAtMills,
-                interval,
-                buildPendingIntent()
-            )
+    override fun turnOnService() {
+        helper.run {
+            if(switchValue) {
+                alarmManager.run {
+                    val triggerAtMills = SystemClock.elapsedRealtime() + interval
+                    setInexactRepeating(
+                        AlarmManager.ELAPSED_REALTIME,
+                        triggerAtMills,
+                        interval,
+                        buildPendingIntent()
+                    )
+                }
+            }
         }
     }
 
-    override fun deleteTimer() = alarmManager.cancel(buildPendingIntent())
+    override fun turnOffService() = alarmManager.cancel(buildPendingIntent())
+
+    override var interval: Long
+        get() = helper.interval
+        set(value) {
+            helper.apply {
+                interval = value
+                when(switchValue) {
+                    true -> turnOnService()
+                    false -> turnOffService()
+                }
+            }
+        }
 }
