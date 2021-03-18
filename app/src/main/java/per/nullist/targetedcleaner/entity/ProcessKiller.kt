@@ -5,10 +5,10 @@ class ProcessKiller(
     private val packageRepository: PackageRepository
 ) {
     fun killAll() {
-        val runningProcesses = processRepository.readAllProcessPackages()
-        val notToKillProcesses = packageRepository.readAllPackagesNotToKill()
-        val willKilledProcesses = runningProcesses.filter { it !in notToKillProcesses }
+        val runningProcessPackages = processRepository.allProcessPackages
+        val safeAppPackages = packageRepository.safeAppPackages
+        val unsafeProcessPackages = runningProcessPackages.filter { it !in safeAppPackages }
 
-        willKilledProcesses.forEach { processRepository.killProcess(it) }
+        unsafeProcessPackages.forEach { processRepository.killProcess(it) }
     }
 }

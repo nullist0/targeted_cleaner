@@ -5,16 +5,14 @@ import per.nullist.targetedcleaner.entity.PackageRepository
 
 class LocalPackageRepository(private val context: Context) : PackageRepository {
     private val packageManager = context.packageManager
+    private val helper = SharedPreferenceHelper(context)
 
-    override fun readAllInstalledPackages(): List<String> = packageManager
-        .getInstalledApplications(0)
-        .map { it.packageName }
+    override val allInstalledPackages: List<String>
+        get() = packageManager
+            .getInstalledApplications(0)
+            .map { it.packageName }
 
-    override fun readAllPackagesNotToKill(): List<String> {
-        return SharedPreferenceHelper
-            .instance(context)
-            .getStringSet("notToKillPackages", setOf<String>())
-            ?.toList()
-            ?: listOf()
-    }
+    override var safeAppPackages: Set<String>
+        get() = helper.safeAppPackages
+        set(value) { helper.safeAppPackages = value }
 }
