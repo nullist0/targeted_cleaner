@@ -5,4 +5,5 @@ interface SettingRepository {
     fun turnOffService()
 
     var interval: Long
+    var isRunning: Boolean
 }
