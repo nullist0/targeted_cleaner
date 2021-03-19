@@ -23,17 +23,15 @@ class LocalSettingRepository(private val context: Context) : SettingRepository {
     }
 
     override fun turnOnService() {
-        helper.run {
-            if(switchValue) {
-                alarmManager.run {
-                    val triggerAtMills = SystemClock.elapsedRealtime() + interval
-                    setInexactRepeating(
-                        AlarmManager.ELAPSED_REALTIME,
-                        triggerAtMills,
-                        interval,
-                        buildPendingIntent()
-                    )
-                }
+        if(isRunning) {
+            alarmManager.run {
+                val triggerAtMills = SystemClock.elapsedRealtime() + interval
+                setInexactRepeating(
+                    AlarmManager.ELAPSED_REALTIME,
+                    triggerAtMills,
+                    interval,
+                    buildPendingIntent()
+                )
             }
         }
     }
@@ -45,10 +43,13 @@ class LocalSettingRepository(private val context: Context) : SettingRepository {
         set(value) {
             helper.apply {
                 interval = value
-                when(switchValue) {
+                when(isRunning) {
                     true -> turnOnService()
                     false -> turnOffService()
                 }
             }
         }
+    override var isRunning: Boolean
+        get() = helper.isRunning
+        set(value) { helper.isRunning = value }
 }

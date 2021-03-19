@@ -17,15 +17,15 @@ class SharedPreferenceHelper(private val context: Context) {
         get() = instance.getLong(TIMER_SETTING, 0L)
         set(value) { instance.edit { putLong(TIMER_SETTING, value) } }
 
-    var switchValue : Boolean
-        get() = instance.getBoolean(SWITCH_VALUE, false)
-        set(value) { instance.edit { putBoolean(SWITCH_VALUE, value) } }
+    var isRunning : Boolean
+        get() = instance.getBoolean(IS_RUNNING, false)
+        set(value) { instance.edit { putBoolean(IS_RUNNING, value) } }
 
     companion object {
         private const val NAME = "TargetedCleanerPreferences"
 
         private const val SAFE_APP_PACKAGES = "SafeAppPackages"
         private const val TIMER_SETTING = "TimerSetting"
-        private const val SWITCH_VALUE = "SwitchValue"
+        private const val IS_RUNNING = "IsRunning"
     }
 }
