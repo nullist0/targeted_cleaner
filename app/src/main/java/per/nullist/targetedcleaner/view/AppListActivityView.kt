@@ -7,8 +7,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import per.nullist.targetedcleaner.view_model.AppListViewModel
 import per.nullist.targetedcleaner.view_model.data.AppInfo
@@ -49,16 +47,16 @@ fun AppList(
 fun AppListActivityView(
     model: AppListViewModel
 ) {
-    val apps by model.apps.observeAsState()
-    val checkedSet by model.safeApps.observeAsState()
-
-    AppList(
-        apps ?: listOf(),
-        checkedSet ?: setOf()
-    ) { checked, packageName ->
-        when {
-            checked -> model.addSafeApp(packageName)
-            else -> model.removeSafeApp(packageName)
-        }
-    }
+//    val apps by model.apps.observeAsState()
+//    val checkedSet by model.safeApps.observeAsState()
+//
+//    AppList(
+//        apps ?: listOf(),
+//        checkedSet ?: setOf()
+//    ) { checked, packageName ->
+//        when {
+//            checked -> model.addSafeApp(packageName)
+//            else -> model.removeSafeApp(packageName)
+//        }
+//    }
 }
