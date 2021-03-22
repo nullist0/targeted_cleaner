@@ -2,6 +2,7 @@ package per.nullist.targetedcleaner.livedata
 
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 fun SharedPreferences.getIntLiveData(key: String, defValue: Int): LiveData<Int> {
     return LiveSharedPreferences (this, get = { getInt(key, defValue) })
@@ -25,7 +26,7 @@ fun SharedPreferences.getBooleanLiveData(key: String, defValue: Boolean): LiveDa
 class LiveSharedPreferences<T>(
     private val preferences: SharedPreferences,
     private val get: SharedPreferences.() -> T,
-) : LiveData<T>() {
+) : LiveData<T>(preferences.get()) {
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
         value = preferences.get()
     }

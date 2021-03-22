@@ -36,7 +36,7 @@ class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepo
     override val intervalLiveData: LiveData<Long>
         get() = instance.getLongLiveData(INTERVAL_IN_MIN, 15 * 3600L)
 
-    override fun turnOnService() {
+    private fun toggleService(isRunning : Boolean) {
         if(isRunning) {
             alarmManager.run {
                 val triggerAtMills = SystemClock.elapsedRealtime() + interval
@@ -47,10 +47,10 @@ class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepo
                     buildPendingIntent()
                 )
             }
+        } else {
+            alarmManager.cancel(buildPendingIntent())
         }
     }
-
-    override fun turnOffService() = alarmManager.cancel(buildPendingIntent())
 
     override var interval : Long
         get() = instance.getLong(INTERVAL_IN_MIN, 0)
@@ -58,5 +58,8 @@ class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepo
 
     override var isRunning : Boolean
         get() = instance.getBoolean(IS_RUNNING, false)
-        set(value) { instance.edit { putBoolean(IS_RUNNING, value) } }
+        set(value) {
+            toggleService(value)
+            instance.edit { putBoolean(IS_RUNNING, value) }
+        }
 }

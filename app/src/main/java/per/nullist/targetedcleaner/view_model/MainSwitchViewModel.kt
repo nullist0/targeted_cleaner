@@ -7,5 +7,5 @@ import androidx.lifecycle.ViewModel
  * Data binder class for Switch Compose for MainActivityView
  */
 abstract class MainSwitchViewModel : ViewModel() {
-    abstract val isChecked: LiveData<Boolean>
+    abstract val isRunning: LiveData<Boolean>
 }
