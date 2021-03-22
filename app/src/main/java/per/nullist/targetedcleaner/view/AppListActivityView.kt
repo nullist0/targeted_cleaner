@@ -7,37 +7,41 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+
 import per.nullist.targetedcleaner.view_model.AppListViewModel
 import per.nullist.targetedcleaner.view_model.data.AppInfo
+import per.nullist.targetedcleaner.view_model.event_handler.SafeAppsEventHandler
 
 @Composable
 fun AppInfoItem(
-    info: AppInfo,
-    checked: Boolean,
+    app: AppInfo,
+    isSafe: Boolean,
     onChangeChecked: (Boolean) -> Unit
 ) {
     Row (
-        Modifier.clickable { onChangeChecked(!checked) }
+        Modifier.clickable { onChangeChecked(!isSafe) }
     ) {
-        Text(info.name)
-        Checkbox(checked, onChangeChecked)
+        Text(app.name)
+        Checkbox(isSafe, onChangeChecked)
     }
 }
 
 @Composable
 fun AppList(
-    infoList: List<AppInfo>,
-    checkedSet: Set<String>,
-    onChangeItemChecked: (Boolean, String) -> Unit
+    apps: List<AppInfo>,
+    safeApps: Set<AppInfo>,
+    onChangeItemChecked: (Boolean, AppInfo) -> Unit
 ) {
     LazyColumn() {
-        items(infoList) {
+        items(apps) { app ->
             AppInfoItem(
-                it,
-                it.packageName in checkedSet
-            ) { checked ->
-                onChangeItemChecked(checked, it.packageName)
+                app,
+                safeApps.contains(app)
+            ) { isSafe ->
+                onChangeItemChecked(isSafe, app)
             }
         }
     }
@@ -45,18 +49,19 @@ fun AppList(
 
 @Composable
 fun AppListActivityView(
-    model: AppListViewModel
+    model: AppListViewModel,
+    eventHandler: SafeAppsEventHandler
 ) {
-//    val apps by model.apps.observeAsState()
-//    val checkedSet by model.safeApps.observeAsState()
-//
-//    AppList(
-//        apps ?: listOf(),
-//        checkedSet ?: setOf()
-//    ) { checked, packageName ->
-//        when {
-//            checked -> model.addSafeApp(packageName)
-//            else -> model.removeSafeApp(packageName)
-//        }
-//    }
+    val apps by model.allInstalledApps.observeAsState()
+    val safeApps by model.safeApps.observeAsState()
+
+    AppList(
+        apps?.sortedBy { it.name } ?: listOf(),
+        safeApps ?: setOf()
+    ) { isSafe, app ->
+        when {
+            isSafe -> eventHandler.add(app)
+            else -> eventHandler.remove(app)
+        }
+    }
 }

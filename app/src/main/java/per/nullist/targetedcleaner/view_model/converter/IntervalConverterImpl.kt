@@ -6,6 +6,6 @@ class IntervalConverterImpl : IntervalConverter {
     override fun convertToMin(interval: Long): Int = (interval / MILLISECOND_PER_MINUTE).toInt()
 
     companion object {
-        private const val MILLISECOND_PER_MINUTE = 3600L
+        private const val MILLISECOND_PER_MINUTE = 60 * 1000L
     }
 }

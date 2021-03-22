@@ -27,6 +27,10 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.doOnAttach
 import androidx.core.view.doOnLayout
 import kotlinx.coroutines.flow.asFlow
+import per.nullist.targetedcleaner.view_model.MainSwitchViewModel
+import per.nullist.targetedcleaner.view_model.event_handler.MainSwitchEventHandler
+import per.nullist.targetedcleaner.view_model.event_handler.MainSwitchEventHandlerImpl
+import per.nullist.targetedcleaner.view_model.event_handler.SafeAppsEventHandler
 import kotlin.math.sqrt
 
 class CircularRevealBoxScope(
@@ -276,9 +280,11 @@ fun OnOffButton(
     )
 }
 
-@Preview
 @Composable
-fun MainActivityView() {
+fun MainActivityView(
+    viewModel: MainSwitchViewModel,
+    eventHandler: MainSwitchEventHandler
+) {
     Column(
         modifier = Modifier.fillMaxHeight()
     ) {

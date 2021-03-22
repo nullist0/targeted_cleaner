@@ -5,16 +5,17 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
 import per.nullist.targetedcleaner.view_model.data.AppInfo
 
-class AppInfoPackageConverterImpl(private val context: Context) : AppInfoPackageConverter {
+class AppInfoPackageConverterImpl(context: Context) : AppInfoPackageConverter {
     private val packageManager = context.packageManager
 
     override fun convertToAppInfo(packageName: String): AppInfo {
         return packageManager.run {
             val info = getApplicationInfo(packageName, 0)
+            val name = getApplicationLabel(info).toString()
             val icon = getApplicationIcon(packageName).toBitmap().asImageBitmap()
             AppInfo(
-                info.name,
-                info.packageName,
+                name,
+                packageName,
                 icon
             )
         }
