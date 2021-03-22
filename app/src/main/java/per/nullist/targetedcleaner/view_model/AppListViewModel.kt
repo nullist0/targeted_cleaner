@@ -11,7 +11,7 @@ abstract class AppListViewModel: ViewModel() {
     /**
      * Getter of app information list for view
      */
-    abstract val apps: LiveData<List<AppInfo>>
+    abstract val allInstalledApps: LiveData<List<AppInfo>>
 
     /**
      * Getter of a set of apps which is safe from auto killer

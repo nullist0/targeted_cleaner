@@ -8,11 +8,11 @@ class SafeAppsEventHandlerImpl(
     private val converter: AppInfoPackageConverter,
     private val packageRepository: PackageRepository
 ) : SafeAppsEventHandler {
-    override fun add(info: AppInfo) {
-        packageRepository.safeAppPackages += info.packageName
+    override fun add(app: AppInfo) {
+        packageRepository.safeAppPackages += converter.convertToPackageName(app)
     }
 
-    override fun remove(info: AppInfo) {
-        packageRepository.safeAppPackages -= info.packageName
+    override fun remove(app: AppInfo) {
+        packageRepository.safeAppPackages -= converter.convertToPackageName(app)
     }
 }

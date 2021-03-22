@@ -13,7 +13,7 @@ class AppListViewModelImpl(
     private val packageRepository: LivePackageRepository
 ) : AppListViewModel() {
 
-    override val apps: LiveData<List<AppInfo>> by lazy {
+    override val allInstalledApps: LiveData<List<AppInfo>> by lazy {
         MutableLiveData(packageRepository.allInstalledPackages.map { converter.convertToAppInfo(it) })
     }
 
