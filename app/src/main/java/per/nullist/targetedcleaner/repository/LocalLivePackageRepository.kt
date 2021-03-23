@@ -1,7 +1,10 @@
 package per.nullist.targetedcleaner.repository
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import per.nullist.targetedcleaner.livedata.LivePackageRepository
@@ -12,10 +15,11 @@ import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.SAFE
 class LocalLivePackageRepository(
     context: Context
 ) : LivePackageRepository {
-    private val packageManager = context.packageManager
+    private val packageManager by lazy { context.packageManager }
 
-    private val instance : SharedPreferences =
+    private val instance by lazy {
         context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
+    }
 
     override var safeAppPackages : Set<String>
         get() = instance.getStringSet(SAFE_APP_PACKAGES, null) ?: setOf()
@@ -26,6 +30,9 @@ class LocalLivePackageRepository(
 
     override val allInstalledPackages: List<String>
         get() = packageManager
-            .getInstalledApplications(0)
-            .map { it.packageName }
+            .queryIntentActivities(
+                Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER),
+                PackageManager.GET_META_DATA
+            )
+            .map { it.activityInfo.packageName }
 }

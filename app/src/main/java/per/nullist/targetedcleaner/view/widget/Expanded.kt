@@ -7,9 +7,9 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun RowScope.RatioExpanded(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     ratio: Float = 1f,
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable BoxScope.() -> Unit = {}
 ) {
     BoxWithConstraints(
         modifier = Modifier.weight(1f)

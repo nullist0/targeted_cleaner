@@ -6,7 +6,7 @@ import androidx.core.graphics.drawable.toBitmap
 import per.nullist.targetedcleaner.view_model.data.AppInfo
 
 class AppInfoPackageConverterImpl(context: Context) : AppInfoPackageConverter {
-    private val packageManager = context.packageManager
+    private val packageManager by lazy { context.packageManager }
 
     override fun convertToAppInfo(packageName: String): AppInfo {
         return packageManager.run {

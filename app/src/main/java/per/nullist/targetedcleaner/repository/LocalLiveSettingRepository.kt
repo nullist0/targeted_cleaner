@@ -21,8 +21,8 @@ class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepo
     // TODO: it should not be defined in this file
     private val REQUEST_CODE = 10
 
-    private val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-    private val instance : SharedPreferences = context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
+    private val alarmManager by lazy { context.getSystemService(Context.ALARM_SERVICE) as AlarmManager }
+    private val instance by lazy { context.getSharedPreferences(NAME, Context.MODE_PRIVATE) }
 
     private inline fun <reified T> buildIntent(context: Context) : Intent = Intent(context, T::class.java)
 

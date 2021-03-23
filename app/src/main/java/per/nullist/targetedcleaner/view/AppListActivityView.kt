@@ -1,34 +1,51 @@
 package per.nullist.targetedcleaner.view
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Checkbox
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 import per.nullist.targetedcleaner.view_model.AppListViewModel
 import per.nullist.targetedcleaner.view_model.data.AppInfo
 import per.nullist.targetedcleaner.view_model.event_handler.SafeAppsEventHandler
 
+@ExperimentalMaterialApi
 @Composable
 fun AppInfoItem(
     app: AppInfo,
     isSafe: Boolean,
     onChangeChecked: (Boolean) -> Unit
 ) {
-    Row (
-        Modifier.clickable { onChangeChecked(!isSafe) }
+    ListItem(
+        icon = {
+            Image(
+                bitmap = app.icon,
+                contentDescription = "icon of ${app.name}",
+                Modifier.size(50.dp)
+            )
+        },
+        trailing = {
+            Checkbox(isSafe, onChangeChecked)
+        }
     ) {
         Text(app.name)
-        Checkbox(isSafe, onChangeChecked)
+
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun AppList(
     apps: List<AppInfo>,
@@ -47,6 +64,7 @@ fun AppList(
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
 fun AppListActivityView(
     model: AppListViewModel,
@@ -56,7 +74,7 @@ fun AppListActivityView(
     val safeApps by model.safeApps.observeAsState()
 
     AppList(
-        apps?.sortedBy { it.name } ?: listOf(),
+        apps ?: listOf(),
         safeApps ?: setOf()
     ) { isSafe, app ->
         when {

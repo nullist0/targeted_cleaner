@@ -1,8 +1,8 @@
 package per.nullist.targetedcleaner.view_model
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.map
+import android.util.Log
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 
 import per.nullist.targetedcleaner.livedata.LivePackageRepository
 import per.nullist.targetedcleaner.view_model.converter.AppInfoPackageConverter
@@ -13,8 +13,13 @@ class AppListViewModelImpl(
     private val packageRepository: LivePackageRepository
 ) : AppListViewModel() {
 
-    override val allInstalledApps: LiveData<List<AppInfo>> by lazy {
-        MutableLiveData(packageRepository.allInstalledPackages.map { converter.convertToAppInfo(it) })
+    override val allInstalledApps: LiveData<List<AppInfo>> =
+        MutableLiveData<List<AppInfo>>(listOf()).apply {
+            viewModelScope.launch {
+
+                val packages = packageRepository.allInstalledPackages
+                postValue(packages.map { converter.convertToAppInfo(it) }.sortedBy { it.name })
+            }
     }
 
     override val safeApps: LiveData<Set<AppInfo>> by lazy {
