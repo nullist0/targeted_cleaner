@@ -52,7 +52,7 @@ fun AppList(
     safeApps: Set<AppInfo>,
     onChangeItemChecked: (Boolean, AppInfo) -> Unit
 ) {
-    LazyColumn() {
+    LazyColumn {
         items(apps) { app ->
             AppInfoItem(
                 app,
