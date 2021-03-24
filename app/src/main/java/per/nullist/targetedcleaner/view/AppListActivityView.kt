@@ -23,7 +23,7 @@ import per.nullist.targetedcleaner.view_model.event_handler.SafeAppsEventHandler
 fun AppInfoItem(
     app: AppInfo,
     isSafe: Boolean,
-    onChangeChecked: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit
 ) {
     ListItem(
         icon = {
@@ -34,11 +34,11 @@ fun AppInfoItem(
             )
         },
         trailing = {
-            Checkbox(isSafe, onChangeChecked)
-        }
+            Checkbox(isSafe, { onCheckedChange(!it) })
+        },
+        modifier = Modifier.clickable { onCheckedChange(!isSafe) }
     ) {
         Text(app.name)
-
     }
 }
 

@@ -4,5 +4,5 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
 abstract class TimerSettingViewModel: ViewModel() {
-    abstract val interval : LiveData<Long>
+    abstract val interval : LiveData<Int>
 }

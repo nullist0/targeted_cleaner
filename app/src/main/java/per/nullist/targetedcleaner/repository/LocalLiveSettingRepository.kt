@@ -8,6 +8,7 @@ import android.content.SharedPreferences
 import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.core.content.edit
+import androidx.lifecycle.map
 
 import per.nullist.targetedcleaner.component.receiver.AutoKillerReceiver
 import per.nullist.targetedcleaner.livedata.LiveSettingRepository
@@ -34,7 +35,7 @@ class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepo
     override val isRunningLiveData: LiveData<Boolean>
         get() = instance.getBooleanLiveData(IS_RUNNING, false)
     override val intervalLiveData: LiveData<Long>
-        get() = instance.getLongLiveData(INTERVAL_IN_MIN, 15 * 3600L)
+        get() = instance.getLongLiveData(INTERVAL_IN_MIN, 15 * 60000L)
 
     private fun toggleService(isRunning : Boolean) {
         if(isRunning) {

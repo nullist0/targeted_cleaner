@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import per.nullist.targetedcleaner.repository.LocalLivePackageRepository
 import per.nullist.targetedcleaner.repository.LocalLiveSettingRepository
 import per.nullist.targetedcleaner.view_model.converter.AppInfoPackageConverterImpl
+import per.nullist.targetedcleaner.view_model.converter.IntervalConverterImpl
 
 @Suppress("UNCHECKED_CAST")
 class ViewModelFactory(
@@ -33,6 +34,7 @@ class ViewModelFactory(
                 isAssignableFrom(TimerSettingViewModel::class.java) -> {
                     Log.d("VMF", "TimerSettingViewModel")
                     TimerSettingViewModelImpl(
+                        IntervalConverterImpl(),
                         LocalLiveSettingRepository(application.applicationContext)
                     ) as T
                 }

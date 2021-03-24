@@ -30,7 +30,8 @@
         </activity>
 
         <activity
-            android:name=".component.activity.TimerSettingActivity">
+            android:name=".component.activity.TimerSettingActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
         <receiver
