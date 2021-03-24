@@ -126,7 +126,7 @@ fun CircularRevealTest(
 fun RememberTest () {
     var clicked by remember { mutableStateOf(0) }
     var clicked2 by remember { mutableStateOf(0) }
-    Column() {
+    Column {
         Text("button is $clicked")
         Button(onClick = { clicked += 1 }) {
             Text("change")
@@ -329,5 +329,5 @@ fun MainSwitch(
     modifier: Modifier = Modifier
 ) {
     //TODO("Not yet implemented")
-    Box() {}
+    Box {}
 }
