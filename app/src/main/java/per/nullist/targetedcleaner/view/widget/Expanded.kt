@@ -12,12 +12,12 @@ fun RowScope.RatioExpanded(
     content: @Composable BoxScope.() -> Unit = {}
 ) {
     BoxWithConstraints(
-        modifier = Modifier.weight(1f)
+        modifier = modifier.weight(1f)
     ) {
         Box(
             content = content,
             contentAlignment = Alignment.Center,
-            modifier = modifier.size(
+            modifier = Modifier.size(
                 maxWidth,
                 maxWidth * ratio
             )

@@ -7,6 +7,11 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import per.nullist.targetedcleaner.livedata.LivePackageRepository
 import per.nullist.targetedcleaner.livedata.getStringSetLiveData
 import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.NAME
@@ -28,11 +33,14 @@ class LocalLivePackageRepository(
     override val safeAppPackagesLiveData: LiveData<Set<String>>
         get() = instance.getStringSetLiveData(SAFE_APP_PACKAGES, setOf())
 
-    override val allInstalledPackages: List<String>
-        get() = packageManager
-            .queryIntentActivities(
-                Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER),
-                PackageManager.GET_META_DATA
-            )
-            .map { it.activityInfo.packageName }
+    override val allInstalledPackages: Flow<List<String>> = flow {
+             val intent = Intent().apply {
+                 action = Intent.ACTION_MAIN
+                 addCategory(Intent.CATEGORY_LAUNCHER)
+             }
+             val resolveInfos = packageManager
+                 .queryIntentActivities(intent, PackageManager.GET_META_DATA)
+             val packages = resolveInfos.map { it.activityInfo.packageName }
+             emit(packages)
+         }.flowOn(Dispatchers.IO)
 }
