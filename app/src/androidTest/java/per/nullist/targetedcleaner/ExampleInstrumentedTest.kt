@@ -1,16 +1,13 @@
 package per.nullist.targetedcleaner
 
 import androidx.compose.material.Text
-import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
 import org.junit.Test
 import org.junit.runner.RunWith
 
-import org.junit.Assert.*
 import org.junit.Rule
 import per.nullist.targetedcleaner.component.activity.MainActivity
 
