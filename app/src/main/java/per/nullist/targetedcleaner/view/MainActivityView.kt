@@ -5,7 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.Typography
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.Timer
@@ -21,8 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import per.nullist.targetedcleaner.R
 import per.nullist.targetedcleaner.component.AppListActivity
 import per.nullist.targetedcleaner.component.Router
 import per.nullist.targetedcleaner.component.TimerSettingActivity
@@ -138,14 +144,22 @@ fun MainActivityView(
 ) {
     val isRunning by viewModel.isRunning.observeAsState()
 
-    Column(Modifier.fillMaxHeight()) {
-        MainSwitch(
-            modifier = Modifier
-                .weight(1.0f)
-                .fillMaxSize(),
-            initialValue = isRunning ?: false,
-            onChangeChecked = { eventHandler.setIsRunning(it) }
+    MaterialTheme(
+        typography = Typography(
+            defaultFontFamily = FontFamily(
+                Font(R.font.gmarket_sans_medium, FontWeight.Medium)
+            )
         )
-        MainNavigator(Modifier.fillMaxWidth())
+    ) {
+        Column(Modifier.fillMaxHeight()) {
+            MainSwitch(
+                modifier = Modifier
+                    .weight(1.0f)
+                    .fillMaxSize(),
+                initialValue = isRunning ?: false,
+                onChangeChecked = { eventHandler.setIsRunning(it) }
+            )
+            MainNavigator(Modifier.fillMaxWidth())
+        }
     }
 }

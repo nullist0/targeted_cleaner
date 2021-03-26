@@ -11,7 +11,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import per.nullist.targetedcleaner.R
 
 import per.nullist.targetedcleaner.view_model.AppListViewModel
 import per.nullist.targetedcleaner.view_model.data.AppInfo
@@ -80,26 +85,35 @@ fun AppListActivityView(
     val apps by model.allInstalledApps.observeAsState()
     val safeApps by model.safeApps.observeAsState()
 
-    Scaffold(
-        topBar = {
-            TopAppBar {
-                Text("App List",
-                    Modifier
-                        .padding(start = 20.dp))
-            }
-        }
+    MaterialTheme(
+        typography = Typography(
+            defaultFontFamily = FontFamily(
+                Font(R.font.ibm_plex_sans_kr_light, FontWeight.Light)
+            )
+        )
     ) {
-        if((apps ?: listOf()).isEmpty()) {
-            Loading()
-        }
-        else {
-            AppList(
-                apps ?: listOf(),
-                safeApps ?: setOf()
-            ) { isSafe, app ->
-                when {
-                    isSafe -> eventHandler.add(app)
-                    else -> eventHandler.remove(app)
+        Scaffold(
+            topBar = {
+                TopAppBar {
+                    Text("제외할 앱 설정",
+                        Modifier.padding(start = 20.dp),
+                        fontSize = 20.sp
+                    )
+                }
+            }
+        ) {
+            if((apps ?: listOf()).isEmpty()) {
+                Loading()
+            }
+            else {
+                AppList(
+                    apps ?: listOf(),
+                    safeApps ?: setOf()
+                ) { isSafe, app ->
+                    when {
+                        isSafe -> eventHandler.add(app)
+                        else -> eventHandler.remove(app)
+                    }
                 }
             }
         }
