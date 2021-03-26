@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.lifecycle.viewModelScope
 import per.nullist.targetedcleaner.R
 
 import per.nullist.targetedcleaner.repository.LocalLivePackageRepository
@@ -20,6 +21,7 @@ class AppListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel: AppListViewModel by viewModels { ViewModelFactory(application) }
+        viewModel.viewModelScope
         val eventHandler : SafeAppsEventHandler by lazy {
             SafeAppsEventHandlerImpl(
                 AppInfoPackageConverterImpl(applicationContext),

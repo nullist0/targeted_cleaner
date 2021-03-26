@@ -1,8 +1,11 @@
 package per.nullist.targetedcleaner.entity
 
-import kotlinx.coroutines.flow.Flow
-
 interface PackageRepository {
-    val allInstalledPackages : Flow<List<String>>
-    var safeAppPackages : Set<String>
+    suspend fun getAllInstalledPackages() : List<String>
+
+    suspend fun getSafeAppPackages() : Set<String>
+    suspend fun setSafeAppPackages(safeApps: Set<String>)
+
+    suspend fun addSafeAppPackage(packageName: String)
+    suspend fun removeSafeAppPackage(packageName: String)
 }

@@ -1,6 +1,9 @@
 package per.nullist.targetedcleaner.entity
 
 interface SettingRepository {
-    var interval: Long
-    var isRunning: Boolean
+    suspend fun getInterval() : Long
+    suspend fun setInterval(interval: Long)
+
+    suspend fun getIsRunning() : Boolean
+    suspend fun setIsRunning(isRunning: Boolean)
 }

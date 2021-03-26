@@ -1,11 +1,15 @@
 package per.nullist.targetedcleaner.view_model.event_handler
 
+import kotlinx.coroutines.*
+
 import per.nullist.targetedcleaner.entity.SettingRepository
 
 class MainSwitchEventHandlerImpl(
     private val settingRepository: SettingRepository
-) : MainSwitchEventHandler {
+) : MainSwitchEventHandler() {
     override fun setIsRunning(isRunning: Boolean) {
-        settingRepository.isRunning = isRunning
+        eventHandlerScope.launch {
+            settingRepository.setIsRunning(isRunning)
+        }
     }
 }

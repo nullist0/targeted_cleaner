@@ -1,6 +1,6 @@
 package per.nullist.targetedcleaner.view_model.event_handler
 
-interface MainSwitchEventHandler {
-    fun setIsRunning(isRunning: Boolean)
+abstract class MainSwitchEventHandler: EventHandler() {
+    abstract fun setIsRunning(isRunning: Boolean)
 }
 

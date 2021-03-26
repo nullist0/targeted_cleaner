@@ -4,9 +4,9 @@ class ProcessKiller(
     private val processRepository: ProcessRepository,
     private val packageRepository: PackageRepository
 ) {
-    fun killAll() {
-        val runningProcessPackages = processRepository.allProcessPackages
-        val safeAppPackages = packageRepository.safeAppPackages
+    suspend fun killAll() {
+        val runningProcessPackages = processRepository.getAllProcessPackages()
+        val safeAppPackages = packageRepository.getSafeAppPackages()
         val unsafeProcessPackages = runningProcessPackages.filter { it !in safeAppPackages }
 
         unsafeProcessPackages.forEach { processRepository.killProcess(it) }

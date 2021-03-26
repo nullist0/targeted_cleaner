@@ -9,6 +9,8 @@ import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.core.content.edit
 import androidx.lifecycle.map
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 import per.nullist.targetedcleaner.component.receiver.AutoKillerReceiver
 import per.nullist.targetedcleaner.livedata.LiveSettingRepository
@@ -37,9 +39,31 @@ class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepo
     override val intervalLiveData: LiveData<Long>
         get() = instance.getLongLiveData(INTERVAL_IN_MIN, 15 * 60000L)
 
-    private fun toggleService(isRunning : Boolean) {
+    override suspend fun getInterval(): Long {
+        return withContext(Dispatchers.IO) { instance.getLong(INTERVAL_IN_MIN, 0) }
+    }
+
+    override suspend fun setInterval(interval: Long) {
+        withContext(Dispatchers.IO) {
+            instance.edit { putLong(INTERVAL_IN_MIN, interval) }
+        }
+    }
+
+    override suspend fun getIsRunning(): Boolean {
+        return withContext(Dispatchers.IO) { instance.getBoolean(IS_RUNNING, false) }
+    }
+
+    override suspend fun setIsRunning(isRunning: Boolean) {
+        withContext(Dispatchers.IO) {
+            toggleService(isRunning)
+            instance.edit { putBoolean(IS_RUNNING, isRunning) }
+        }
+    }
+
+    private suspend fun toggleService(isRunning : Boolean) {
         if(isRunning) {
             alarmManager.run {
+                val interval = getInterval()
                 val triggerAtMills = SystemClock.elapsedRealtime() + interval
                 setInexactRepeating(
                     AlarmManager.ELAPSED_REALTIME,
@@ -52,15 +76,4 @@ class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepo
             alarmManager.cancel(buildPendingIntent())
         }
     }
-
-    override var interval : Long
-        get() = instance.getLong(INTERVAL_IN_MIN, 0)
-        set(value) { instance.edit { putLong(INTERVAL_IN_MIN, value) } }
-
-    override var isRunning : Boolean
-        get() = instance.getBoolean(IS_RUNNING, false)
-        set(value) {
-            toggleService(value)
-            instance.edit { putBoolean(IS_RUNNING, value) }
-        }
 }
