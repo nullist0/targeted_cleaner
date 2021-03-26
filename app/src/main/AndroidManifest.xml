@@ -15,7 +15,7 @@
         android:fullBackupContent="@xml/backup_descriptor">
 
         <activity
-            android:name=".component.activity.MainActivity"
+            android:name=".main.activity.MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true">
             <intent-filter>
@@ -26,16 +26,17 @@
         </activity>
 
         <activity
-            android:name=".component.activity.AppListActivity">
+            android:name=".main.activity.AppListActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
         <activity
-            android:name=".component.activity.TimerSettingActivity"
+            android:name=".main.activity.TimerSettingActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
         <receiver
-            android:name=".component.receiver.AutoKillerReceiver"
+            android:name=".main.receiver.AutoKillerReceiver"
             android:enabled="true">
         </receiver>
     </application>

@@ -4,15 +4,13 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.SystemClock
 import androidx.lifecycle.LiveData
 import androidx.core.content.edit
-import androidx.lifecycle.map
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-import per.nullist.targetedcleaner.component.receiver.AutoKillerReceiver
+import per.nullist.targetedcleaner.main.receiver.AutoKillerReceiver
 import per.nullist.targetedcleaner.livedata.LiveSettingRepository
 import per.nullist.targetedcleaner.livedata.getBooleanLiveData
 import per.nullist.targetedcleaner.livedata.getLongLiveData

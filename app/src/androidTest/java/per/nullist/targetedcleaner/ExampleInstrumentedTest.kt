@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Rule
-import per.nullist.targetedcleaner.component.activity.MainActivity
+import per.nullist.targetedcleaner.main.activity.MainActivity
 
 /**
  * Instrumented test, which will execute on an Android device.

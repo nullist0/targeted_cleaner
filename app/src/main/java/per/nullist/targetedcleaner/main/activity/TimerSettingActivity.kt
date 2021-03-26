@@ -1,15 +1,14 @@
-package per.nullist.targetedcleaner.component.activity
+package per.nullist.targetedcleaner.main.activity
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import per.nullist.targetedcleaner.R
 import per.nullist.targetedcleaner.repository.LocalLiveSettingRepository
+
 import per.nullist.targetedcleaner.view.TimerSettingActivityView
 import per.nullist.targetedcleaner.view_model.TimerSettingViewModel
-import per.nullist.targetedcleaner.view_model.TimerSettingViewModelImpl
-import per.nullist.targetedcleaner.view_model.ViewModelFactory
+import per.nullist.targetedcleaner.main.ViewModelFactory
 import per.nullist.targetedcleaner.view_model.converter.IntervalConverterImpl
 import per.nullist.targetedcleaner.view_model.event_handler.TimerSettingEventHandler
 import per.nullist.targetedcleaner.view_model.event_handler.TimerSettingEventHandlerImpl

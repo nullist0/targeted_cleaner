@@ -1,4 +1,4 @@
-package per.nullist.targetedcleaner.view_model
+package per.nullist.targetedcleaner.main
 
 import android.app.Application
 import android.util.Log
@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import per.nullist.targetedcleaner.repository.LocalLivePackageRepository
 import per.nullist.targetedcleaner.repository.LocalLiveSettingRepository
+import per.nullist.targetedcleaner.view_model.*
 import per.nullist.targetedcleaner.view_model.converter.AppInfoPackageConverterImpl
 import per.nullist.targetedcleaner.view_model.converter.IntervalConverterImpl
 

@@ -1,15 +1,19 @@
 package per.nullist.targetedcleaner.view
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
@@ -132,19 +136,30 @@ fun TimerSettingActivityView(
     eventHandler: TimerSettingEventHandler
 ) {
     val interval by viewModel.interval.observeAsState()
-    Column(Modifier.fillMaxSize()) {
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.Center
-        ) {
-            TimerView(
-                interval = interval ?: 15,
-            ) {
-                eventHandler.setInterval(it)
+
+    Scaffold(
+        topBar = {
+            TopAppBar {
+                Text("App List",
+                    Modifier
+                        .padding(start = 20.dp))
             }
         }
-        TimerNavigator {
-            eventHandler.setInterval(it)
+    ) {
+        Column(Modifier.fillMaxSize()) {
+            Box(
+                modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                TimerView(
+                    interval = interval ?: 15,
+                ) {
+                    eventHandler.setInterval(it)
+                }
+            }
+            TimerNavigator(Modifier.background(Color(0xFFe1e1e1))) {
+                eventHandler.setInterval(it)
+            }
         }
     }
 }
