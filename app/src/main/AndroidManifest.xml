@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <application
+        android:name=".main.TargetedCleanerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,7 +16,7 @@
         android:fullBackupContent="@xml/backup_descriptor">
 
         <activity
-            android:name=".main.activity.MainActivity"
+            android:name=".main.MainActivityImpl"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:exported="true">
             <intent-filter>
@@ -26,17 +27,17 @@
         </activity>
 
         <activity
-            android:name=".main.activity.AppListActivity"
+            android:name=".main.AppListActivityImpl"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
         <activity
-            android:name=".main.activity.TimerSettingActivity"
+            android:name=".main.TimerSettingActivityImpl"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
 
         <receiver
-            android:name=".main.receiver.AutoKillerReceiver"
+            android:name=".main.AutoKillerReceiverImpl"
             android:enabled="true">
         </receiver>
     </application>

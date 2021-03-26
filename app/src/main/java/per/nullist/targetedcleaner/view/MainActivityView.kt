@@ -1,6 +1,5 @@
 package per.nullist.targetedcleaner.view
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -24,8 +23,9 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import per.nullist.targetedcleaner.main.activity.AppListActivity
-import per.nullist.targetedcleaner.main.activity.TimerSettingActivity
+import per.nullist.targetedcleaner.component.AppListActivity
+import per.nullist.targetedcleaner.component.Router
+import per.nullist.targetedcleaner.component.TimerSettingActivity
 import per.nullist.targetedcleaner.view.widget.CircularRevealBox
 import per.nullist.targetedcleaner.view.widget.CircularRevealBoxScope
 import per.nullist.targetedcleaner.view_model.MainSwitchViewModel
@@ -105,7 +105,7 @@ fun MainNavigator(
             modifier = Modifier
                 .background(Color(0xFFe1e1e1))
                 .clickable {
-                    context.startActivity(Intent(context, TimerSettingActivity::class.java))
+                    Router.start(TimerSettingActivity::class, context)
                 }
         ) {
             Icon(
@@ -119,7 +119,7 @@ fun MainNavigator(
             modifier = Modifier
                 .background(Color(0xFFe1e1e1))
                 .clickable {
-                    context.startActivity(Intent(context, AppListActivity::class.java))
+                    Router.start(AppListActivity::class, context)
                 }
         ) {
             Icon(

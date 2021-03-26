@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Rule
-import per.nullist.targetedcleaner.main.activity.MainActivity
+import per.nullist.targetedcleaner.main.MainActivityImpl
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -19,7 +19,7 @@ import per.nullist.targetedcleaner.main.activity.MainActivity
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
     @get:Rule
-    val composeTestRule = createAndroidComposeRule<MainActivity>()
+    val composeTestRule = createAndroidComposeRule<MainActivityImpl>()
 
 //    @Test
 //    fun useAppContext() {
