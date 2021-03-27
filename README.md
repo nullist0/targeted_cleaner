@@ -10,7 +10,9 @@ This project is a RAM management app by killing background processes.
 
 # Architecture
 
-![architecture](https://user-images.githubusercontent.com/31719872/112725305-d814c300-8f5a-11eb-85cc-3b19e9296dd6.png)
+<p float="center">
+  <img src="https://user-images.githubusercontent.com/31719872/112725305-d814c300-8f5a-11eb-85cc-3b19e9296dd6.png" width="600" />
+</p>
 
 | Layer              | Description                                                                                                             |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------- |
@@ -20,3 +22,19 @@ This project is a RAM management app by killing background processes.
 | ViewModel Layer    | This layer contains the ViewModel classes for the data binding for the view, and the EventHandler classes for the view. |
 | Domain Layer       | This layer contains the Entity and Business logic for this app.                                                         |
 | Repository Layer   | This layer contains the persistence logic.                                                                              |
+
+```
+Copyright 2021 Lee PyeongWon
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
