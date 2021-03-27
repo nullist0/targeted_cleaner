@@ -23,6 +23,8 @@ This project is a RAM management app by killing background processes.
 | Domain Layer       | This layer contains the Entity and Business logic for this app.                                                         |
 | Repository Layer   | This layer contains the persistence logic.                                                                              |
 
+# License
+
 ```
 Copyright 2021 Lee PyeongWon
 
