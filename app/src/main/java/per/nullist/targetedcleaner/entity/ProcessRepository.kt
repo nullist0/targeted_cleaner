@@ -1,6 +1,6 @@
 package per.nullist.targetedcleaner.entity
 
 interface ProcessRepository {
-    fun readAllProcessPackages() : List<String>
-    fun killProcess(packageName: String)
+    suspend fun getAllProcessPackages(): List<String>
+    suspend fun killProcess(packageName: String)
 }
