@@ -1,5 +1,7 @@
 package per.nullist.targetedcleaner.entity
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -7,6 +9,7 @@ import org.mockito.BDDMockito.given
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnit
 
+@ExperimentalCoroutinesApi
 class ProcessKillerTest {
 
     @get:Rule
@@ -25,13 +28,13 @@ class ProcessKillerTest {
     }
 
     @Test
-    fun testKillCorrectly() {
+    fun testKillCorrectly() = runBlockingTest {
         // given
         val beforeProcesses = listOf("1", "2", "3")
         val allSafeProcesses = setOf("2")
 
-        given(processRepository.allProcessPackages).willReturn(beforeProcesses)
-        given(packageRepository.safeAppPackages).willReturn(allSafeProcesses)
+        given(processRepository.getAllProcessPackages()).willReturn(beforeProcesses)
+        given(packageRepository.getSafeAppPackages()).willReturn(allSafeProcesses)
 
         // when
         killerTest.killAll()
@@ -45,13 +48,13 @@ class ProcessKillerTest {
 
 
     @Test
-    fun testDoNotKillCorrectly() {
+    fun testDoNotKillCorrectly() = runBlockingTest {
         // given
         val beforeProcesses = listOf("1", "2", "3")
         val allSafeProcesses = setOf("2", "4")
 
-        given(processRepository.allProcessPackages).willReturn(beforeProcesses)
-        given(packageRepository.safeAppPackages).willReturn(allSafeProcesses)
+        given(processRepository.getAllProcessPackages()).willReturn(beforeProcesses)
+        given(packageRepository.getSafeAppPackages()).willReturn(allSafeProcesses)
 
         // when
         killerTest.killAll()

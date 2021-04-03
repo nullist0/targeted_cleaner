@@ -1,7 +1,6 @@
 package per.nullist.targetedcleaner.component
 
 import android.content.Context
-import android.util.Log
 
 import kotlin.reflect.KClass
 
