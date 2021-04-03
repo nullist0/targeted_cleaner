@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Targeted Cleaner</string>
+    <string name="app_list_app_bar">제외할 앱 설정</string>
+    <string name="timer_setting_app_bar">시간 설정</string>
+</resources>

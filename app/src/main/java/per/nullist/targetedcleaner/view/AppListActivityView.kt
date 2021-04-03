@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -95,7 +96,8 @@ fun AppListActivityView(
         Scaffold(
             topBar = {
                 TopAppBar {
-                    Text("제외할 앱 설정",
+                    Text(
+                        stringResource(R.string.app_list_app_bar),
                         Modifier.padding(start = 20.dp),
                         fontSize = 20.sp
                     )

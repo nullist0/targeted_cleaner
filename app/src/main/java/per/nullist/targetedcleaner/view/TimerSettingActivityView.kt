@@ -13,6 +13,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.consumeAllChanges
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -149,7 +150,8 @@ fun TimerSettingActivityView(
         Scaffold(
             topBar = {
                 TopAppBar {
-                    Text("시간 설정",
+                    Text(
+                        stringResource(id = R.string.timer_setting_app_bar),
                         Modifier.padding(start = 20.dp),
                         fontSize = 20.sp
                     )
