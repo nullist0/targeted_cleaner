@@ -11,6 +11,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import per.nullist.targetedcleaner.getOrAwaitValue
 import per.nullist.targetedcleaner.livedata.LiveSettingRepository
 
 @ExperimentalCoroutinesApi
@@ -71,37 +72,29 @@ class LocalLiveSettingRepositoryTest {
     fun testIsRunningLiveData() = runBlockingTest {
         // given
         val expectedIsRunning = true
-        var isRunning : Boolean? = null
-        val observer : (Boolean) -> Unit = { isRunning = it }
+        val isRunning : Boolean?
 
-        try {
-            // when
-            underTest.isRunningLiveData.observeForever(observer)
-            underTest.setIsRunning(expectedIsRunning)
+        // when
+        underTest.setIsRunning(expectedIsRunning)
 
-            // then
-            assert(isRunning == expectedIsRunning)
-        } finally {
-            underTest.isRunningLiveData.removeObserver(observer)
-        }
+        isRunning = underTest.isRunningLiveData.getOrAwaitValue()
+
+        // then
+        assert(isRunning == expectedIsRunning)
     }
 
     @Test
     fun testIntervalLiveData() = runBlockingTest {
         // given
         val expectedIntervalInMillis = 60000L
-        var interval : Long? = null
-        val observer : (Long) -> Unit = { interval = it }
+        val interval : Long?
 
-        try {
-            // when
-            underTest.intervalLiveData.observeForever(observer)
-            underTest.setInterval(expectedIntervalInMillis)
+        // when
+        underTest.setInterval(expectedIntervalInMillis)
 
-            // then
-            assert(interval == expectedIntervalInMillis)
-        } finally {
-            underTest.intervalLiveData.removeObserver(observer)
-        }
+        interval = underTest.intervalLiveData.getOrAwaitValue()
+
+        // then
+        assert(interval == expectedIntervalInMillis)
     }
 }

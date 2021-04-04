@@ -14,7 +14,7 @@ import per.nullist.targetedcleaner.livedata.getBooleanLiveData
 import per.nullist.targetedcleaner.livedata.getLongLiveData
 import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.IS_RUNNING
 import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.NAME
-import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.INTERVAL_IN_MIN
+import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.INTERVAL_IN_MILLIS
 
 class LocalLiveSettingRepository(
     private val context: Context,
@@ -25,15 +25,15 @@ class LocalLiveSettingRepository(
     override val isRunningLiveData: LiveData<Boolean>
         get() = instance.getBooleanLiveData(IS_RUNNING, false)
     override val intervalLiveData: LiveData<Long>
-        get() = instance.getLongLiveData(INTERVAL_IN_MIN, 15 * 60000L)
+        get() = instance.getLongLiveData(INTERVAL_IN_MILLIS, 15 * 60000L)
 
     override suspend fun getInterval(): Long {
-        return withContext(dispatcher) { instance.getLong(INTERVAL_IN_MIN, 0) }
+        return withContext(dispatcher) { instance.getLong(INTERVAL_IN_MILLIS, 15 * 60000L) }
     }
 
     override suspend fun setInterval(interval: Long) {
         withContext(dispatcher) {
-            instance.edit { putLong(INTERVAL_IN_MIN, interval) }
+            instance.edit { putLong(INTERVAL_IN_MILLIS, interval) }
         }
     }
 
