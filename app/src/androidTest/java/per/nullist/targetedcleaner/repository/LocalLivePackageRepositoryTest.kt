@@ -1,9 +1,7 @@
 package per.nullist.targetedcleaner.repository
 
 import android.content.Context
-import android.util.Log
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -75,7 +73,7 @@ class LocalLivePackageRepositoryTest {
     fun testSafeAppLiveData() = runBlockingTest {
         // given
         val addedPackageName = context.packageName
-        var safeAppPackages : Set<String>? = null
+        val safeAppPackages : Set<String>?
         val observer: (Set<String>) -> Unit = {}
 
         try {

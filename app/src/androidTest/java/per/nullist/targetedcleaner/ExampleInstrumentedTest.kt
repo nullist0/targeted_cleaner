@@ -1,17 +1,11 @@
 package per.nullist.targetedcleaner
 
-import androidx.compose.material.Text
-import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import junit.framework.Assert.assertEquals
 
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Rule
-import per.nullist.targetedcleaner.main.MainActivityImpl
 
 /**
  * Instrumented test, which will execute on an Android device.

@@ -1,9 +1,6 @@
 package per.nullist.targetedcleaner.repository
 
-import android.app.ActivityManager
 import android.content.Context
-import android.util.Log
-import androidx.core.content.getSystemService
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import kotlinx.coroutines.ExperimentalCoroutinesApi
