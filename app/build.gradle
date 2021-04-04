@@ -38,6 +38,13 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.0.0-beta02'
     }
+
+    packagingOptions {
+        exclude '**/attach_hotspot_windows.dll'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/licenses/ASM'
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
@@ -78,6 +85,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:3.8.0'
 
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3'
+
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Required for instrumented tests
@@ -87,5 +96,7 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.0.0-beta02'
 
     androidTestImplementation 'org.mockito:mockito-android:3.8.0'
+
+    androidTestImplementation 'androidx.arch.core:core-testing:2.1.0'
 }
 

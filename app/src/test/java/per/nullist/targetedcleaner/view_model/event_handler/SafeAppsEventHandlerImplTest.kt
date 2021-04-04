@@ -1,6 +1,9 @@
 package per.nullist.targetedcleaner.view_model.event_handler
 
 import androidx.compose.ui.graphics.ImageBitmap
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -12,10 +15,13 @@ import per.nullist.targetedcleaner.entity.PackageRepository
 import per.nullist.targetedcleaner.view_model.converter.AppInfoPackageConverter
 import per.nullist.targetedcleaner.view_model.data.AppInfo
 
+@ExperimentalCoroutinesApi
 class SafeAppsEventHandlerImplTest {
 
     @get:Rule
     val mockito = MockitoJUnit.rule()!!
+
+    private lateinit var testCoroutineDispatcher: TestCoroutineDispatcher
 
     private lateinit var underTest: SafeAppsEventHandler
 
@@ -30,11 +36,13 @@ class SafeAppsEventHandlerImplTest {
         packageRepository = mock(PackageRepository::class.java)
         icon = mock(ImageBitmap::class.java)
 
-        underTest = SafeAppsEventHandlerImpl(converter, packageRepository)
+        testCoroutineDispatcher = TestCoroutineDispatcher()
+
+        underTest = SafeAppsEventHandlerImpl(converter, packageRepository, testCoroutineDispatcher)
     }
 
     @Test
-    fun testAdd() {
+    fun testAdd() = runBlockingTest {
         // given
         val app = AppInfo(
             "Targeted Cleaner",
@@ -48,11 +56,11 @@ class SafeAppsEventHandlerImplTest {
         underTest.add(app)
 
         // then
-        verify(packageRepository).safeAppPackages += "per.nullist.targetedcleaner"
+        verify(packageRepository).addSafeAppPackage("per.nullist.targetedcleaner")
     }
 
     @Test
-    fun testRemove() {
+    fun testRemove() = runBlockingTest {
         // given
         val app = AppInfo(
             "Targeted Cleaner",
@@ -65,6 +73,6 @@ class SafeAppsEventHandlerImplTest {
         underTest.remove(app)
 
         // then
-        verify(packageRepository).safeAppPackages -= "per.nullist.targetedcleaner"
+        verify(packageRepository).removeSafeAppPackage("per.nullist.targetedcleaner")
     }
 }

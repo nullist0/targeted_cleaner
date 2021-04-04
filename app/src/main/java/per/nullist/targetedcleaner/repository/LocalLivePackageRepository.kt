@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.content.edit
 import androidx.lifecycle.LiveData
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import per.nullist.targetedcleaner.livedata.LivePackageRepository
@@ -13,7 +14,8 @@ import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.NAME
 import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.SAFE_APP_PACKAGES
 
 class LocalLivePackageRepository(
-    context: Context
+    context: Context,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : LivePackageRepository {
     private val packageManager by lazy { context.packageManager }
 
@@ -25,7 +27,7 @@ class LocalLivePackageRepository(
         get() = instance.getStringSetLiveData(SAFE_APP_PACKAGES, setOf())
 
     override suspend fun getAllInstalledPackages(): List<String> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             val intent = Intent().apply {
                 action = Intent.ACTION_MAIN
                 addCategory(Intent.CATEGORY_LAUNCHER)
@@ -36,26 +38,26 @@ class LocalLivePackageRepository(
     }
 
     override suspend fun getSafeAppPackages(): Set<String> {
-        return withContext(Dispatchers.IO) {
+        return withContext(dispatcher) {
             instance.getStringSet(SAFE_APP_PACKAGES, setOf()) ?: setOf()
         }
     }
 
-    override suspend fun setSafeAppPackages(safeApps: Set<String>) {
-        withContext(Dispatchers.IO){
-            instance.edit { putStringSet(SAFE_APP_PACKAGES, safeApps) }
-        }
+    private fun setSafeAppPackages(safeApps: Set<String>) {
+        instance.edit { putStringSet(SAFE_APP_PACKAGES, safeApps) }
     }
 
     override suspend fun addSafeAppPackage(packageName: String) {
-        withContext(Dispatchers.IO) {
-            setSafeAppPackages(getSafeAppPackages() + packageName)
+        withContext(dispatcher) {
+            val packages = getSafeAppPackages()
+            setSafeAppPackages(packages + packageName)
         }
     }
 
     override suspend fun removeSafeAppPackage(packageName: String) {
-        withContext(Dispatchers.IO) {
-            setSafeAppPackages(getSafeAppPackages() - packageName)
+        withContext(dispatcher) {
+            val packages = getSafeAppPackages()
+            setSafeAppPackages(packages - packageName)
         }
     }
 }
