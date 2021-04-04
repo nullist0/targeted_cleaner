@@ -74,21 +74,15 @@ class LocalLivePackageRepositoryTest {
         // given
         val addedPackageName = context.packageName
         val safeAppPackages : Set<String>?
-        val observer: (Set<String>) -> Unit = {}
 
-        try {
-            // when
-            underTest.safeAppPackagesLiveData.observeForever(observer)
-            underTest.addSafeAppPackage(addedPackageName)
+        // when
+        underTest.addSafeAppPackage(addedPackageName)
 
-            safeAppPackages = underTest.safeAppPackagesLiveData.getOrAwaitValue()
+        safeAppPackages = underTest.safeAppPackagesLiveData.getOrAwaitValue()
 
-            // then
-            assert(addedPackageName in safeAppPackages) {
-                "$safeAppPackages doesn't contain $addedPackageName"
-            }
-        } finally {
-            underTest.safeAppPackagesLiveData.removeObserver(observer)
+        // then
+        assert(addedPackageName in safeAppPackages) {
+            "$safeAppPackages doesn't contain $addedPackageName"
         }
     }
 }
