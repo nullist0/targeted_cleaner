@@ -45,6 +45,10 @@ android {
         exclude 'META-INF/LGPL2.1'
         exclude 'META-INF/licenses/ASM'
     }
+    
+    lintOptions {
+       abortOnError false
+   }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
