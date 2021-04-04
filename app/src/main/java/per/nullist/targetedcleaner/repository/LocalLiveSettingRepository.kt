@@ -3,6 +3,7 @@ package per.nullist.targetedcleaner.repository
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.core.content.edit
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import per.nullist.targetedcleaner.component.AutoKillerReceiver
@@ -15,7 +16,10 @@ import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.IS_R
 import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.NAME
 import per.nullist.targetedcleaner.repository.SharedPreferenceConfiguration.INTERVAL_IN_MIN
 
-class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepository {
+class LocalLiveSettingRepository(
+    private val context: Context,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) : LiveSettingRepository {
     private val instance by lazy { context.getSharedPreferences(NAME, Context.MODE_PRIVATE) }
 
     override val isRunningLiveData: LiveData<Boolean>
@@ -24,21 +28,21 @@ class LocalLiveSettingRepository(private val context: Context) : LiveSettingRepo
         get() = instance.getLongLiveData(INTERVAL_IN_MIN, 15 * 60000L)
 
     override suspend fun getInterval(): Long {
-        return withContext(Dispatchers.IO) { instance.getLong(INTERVAL_IN_MIN, 0) }
+        return withContext(dispatcher) { instance.getLong(INTERVAL_IN_MIN, 0) }
     }
 
     override suspend fun setInterval(interval: Long) {
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             instance.edit { putLong(INTERVAL_IN_MIN, interval) }
         }
     }
 
     override suspend fun getIsRunning(): Boolean {
-        return withContext(Dispatchers.IO) { instance.getBoolean(IS_RUNNING, false) }
+        return withContext(dispatcher) { instance.getBoolean(IS_RUNNING, false) }
     }
 
     override suspend fun setIsRunning(isRunning: Boolean) {
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             toggleService(isRunning)
             instance.edit { putBoolean(IS_RUNNING, isRunning) }
         }

@@ -1,15 +1,11 @@
 package per.nullist.targetedcleaner
 
-import androidx.compose.material.Text
-import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
+import junit.framework.Assert.assertEquals
 
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Rule
-import per.nullist.targetedcleaner.main.MainActivityImpl
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -18,22 +14,22 @@ import per.nullist.targetedcleaner.main.MainActivityImpl
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-    @get:Rule
-    val composeTestRule = createAndroidComposeRule<MainActivityImpl>()
-
-//    @Test
-//    fun useAppContext() {
-//        // Context of the app under test.
-//        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-//        assertEquals("per.nullist.targetedcleaner", appContext.packageName)
-//    }
+//    @get:Rule
+//    val composeTestRule = createAndroidComposeRule<MainActivityImpl>()
 
     @Test
-    fun composeTest() {
-        composeTestRule.setContent {
-            Text("ha")
-        }
-
-        composeTestRule.onNode(hasText("hi")).assertExists("no exi")
+    fun useAppContext() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
+        assertEquals("per.nullist.targetedcleaner", appContext.packageName)
     }
+//
+//    @Test
+//    fun composeTest() {
+//        composeTestRule.setContent {
+//            Text("ha")
+//        }
+//
+//        composeTestRule.onNode(hasText("hi")).assertExists("no exi")
+//    }
 }
