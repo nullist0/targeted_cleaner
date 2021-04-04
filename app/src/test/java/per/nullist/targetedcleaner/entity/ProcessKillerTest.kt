@@ -33,7 +33,7 @@ class ProcessKillerTest {
         val beforeProcesses = listOf("1", "2", "3")
         val allSafeProcesses = setOf("2")
 
-        given(processRepository.getAllProcessPackages()).willReturn(beforeProcesses)
+        given(processRepository.getAllRunnablePackages()).willReturn(beforeProcesses)
         given(packageRepository.getSafeAppPackages()).willReturn(allSafeProcesses)
 
         // when
@@ -53,7 +53,7 @@ class ProcessKillerTest {
         val beforeProcesses = listOf("1", "2", "3")
         val allSafeProcesses = setOf("2", "4")
 
-        given(processRepository.getAllProcessPackages()).willReturn(beforeProcesses)
+        given(processRepository.getAllRunnablePackages()).willReturn(beforeProcesses)
         given(packageRepository.getSafeAppPackages()).willReturn(allSafeProcesses)
 
         // when
